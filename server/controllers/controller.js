@@ -2,6 +2,7 @@ const { Todo } = require('../models');
 
 class Controller {
   static displayTodos(req, res) {
+    console.log(req.header)
     Todo.findAll()
       .then(todos => {
         res.status(200).json(todos)
@@ -15,11 +16,11 @@ class Controller {
     console.log(req.body)
     Todo.create({ title: req.body.title, description: req.body.description, status: req.body.status, due_date: req.body.due_date })
       .then((todo) => {
-        res.status(200).json(todo)
+        res.status(201).json(todo)
       })
       .catch(err => {
         console.log(err)
-        res.status(500).json(err)
+        res.status(400).json(err)
       })
   }
 
@@ -29,7 +30,7 @@ class Controller {
         res.status(200).json(todo)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(404).json(err)
       })
   }
 
@@ -39,7 +40,7 @@ class Controller {
         res.status(200).json(updated)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(400).json(err)
       })
   }
 
@@ -49,7 +50,7 @@ class Controller {
         res.status(200).json(deleted)
       })
       .catch(err => [
-        res.status(500).json(err)
+        res.status(404).json(err)
       ])
   }
 }
