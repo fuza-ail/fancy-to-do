@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Title can not be empty'
+        }
       }
     },
     description: DataTypes.STRING,
@@ -19,7 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     due_date: DataTypes.DATE,
     createdAt: new Date(),
     updatedAt: new Date()
-  }, { sequelize })
+  }, {
+    sequelize,
+    hooks: {
+      beforeDestroy: (model, option) => {
+        console.log('masuk hooks')
+      }
+    }
+  })
 
   Todo.associate = function (models) {
     // associations can be defined here
