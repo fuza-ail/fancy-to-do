@@ -22,14 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     due_date: DataTypes.DATE,
     createdAt: new Date(),
     updatedAt: new Date()
-  }, {
-    sequelize,
-    hooks: {
-      beforeDestroy: (model, option) => {
-        console.log('masuk hooks')
-      }
-    }
-  })
+  }, { sequelize })
 
   Todo.associate = function (models) {
     // associations can be defined here

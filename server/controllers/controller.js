@@ -12,6 +12,7 @@ class Controller {
   }
 
   static createTodo(req, res) {
+    console.log(req.headers)
     Todo.create({ title: req.body.title, description: req.body.description, status: req.body.status, due_date: req.body.due_date })
       .then((todo) => {
         res.status(201).json(todo)
