@@ -12,7 +12,6 @@ class Controller {
   }
 
   static createTodo(req, res) {
-    console.log(req.headers)
     Todo.create({ title: req.body.title, description: req.body.description, status: req.body.status, due_date: req.body.due_date })
       .then((todo) => {
         res.status(201).json(todo)
@@ -26,7 +25,7 @@ class Controller {
     Todo.findOne({ where: { id: req.params.id } })
       .then(todo => {
         if (todo == null) {
-          res.status(404).json('error not found')
+          res.status(404).json({ error: 'not found' })
         } else {
           res.status(200).json(todo)
         }
@@ -40,7 +39,7 @@ class Controller {
     Todo.update({ title: req.body.title, description: req.body.description, status: req.body.status, due_date: req.body.due_date }, { where: { id: req.params.id } })
       .then(updated => {
         if (updated[0] == 0) {
-          res.status(404).json('error not found')
+          res.status(404).json({ error: 'not found' })
         } else {
           res.status(200).json(updated)
         }
@@ -54,7 +53,7 @@ class Controller {
     Todo.destroy({ where: { id: req.params.id } })
       .then(deleted => {
         if (deleted == 0) {
-          res.status(404).json('error not found')
+          res.status(404).json({ error: 'not found' })
         } else {
           res.status(200).json(deleted)
         }

@@ -20,6 +20,24 @@ POST /todos ==> Create todo in database
 
 GET /todos/:id ==> Displaying todo by id
 
-PUT /todos/:id ==> Editting todo by id
+- Response:
+  `{ "id": 1, "title": "learn API", "description": "learn API part-0", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "createdAt": "2020-03-30T05:14:30.520Z", "updatedAt": "2020-03-30T05:32:53.825Z" }`
+
+- Error Response:
+  `{ "error": "not found" }`
+
+PUT /todos/:id ==> Editing todo by id
+
+- Request Body:
+  `{ "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z" }`
+
+- Response:
+  `{ "id": 11, "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "updatedAt": "2020-03-30T08:15:46.821Z", "createdAt": "2020-03-30T08:15:46.821Z" }`
+
+- Error Response:
+  `{ "error": "not found" }`
 
 DELETE /todos/:id ==> Delete todo by id
+
+- Error Response:
+  `{ "error": "not found" }`
