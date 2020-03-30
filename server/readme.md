@@ -1,43 +1,98 @@
-API Documentation
+# API Documentation
 
-routes:
-
-GET /todos ==> Displaying all the todos from database
+### GET /todos ==> Displaying all the todos from database
 
 - Response:
-  `[ { "id": 3, "title": "learn API", "description": "learn API part-2", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "createdAt": "2020-03-30T05:25:24.880Z", "updatedAt": "2020-03-30T05:25:24.880Z" }, { "id": 2, "title": "learn API", "description": "learn API part-1", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "createdAt": "2020-03-30T05:24:20.994Z", "updatedAt": "2020-03-30T05:24:20.994Z" } ]`
+  <pre><code>[
+    	{
+        "id": 1,
+        "title": "first todo",
+        "description": "learn API",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+        "createdAt": "2020-03-30T10:26:32.217Z",
+        "updatedAt": "2020-03-30T10:26:32.217Z"
+    	},
+    	{
+        "id": 2,
+        "title": "second todo",
+        "description": "learn API",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+        "createdAt": "2020-03-30T10:29:53.665Z",
+        "updatedAt": "2020-03-30T10:29:53.665Z"
+    	}
+]</code></pre>
 
-POST /todos ==> Create todo in database
+### POST /todos ==> Create todo in database
 
 - Request Header:
-  `{"Content-Type":"application/json; charset=utf-8"}`
+  <pre><code>{
+  "Content-Type":"application/json; charset=utf-8"
+  }</code></pre>
 
 - Request Body:
-  `{ "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z" }`
+  <pre><code>{
+    "id": 1,
+    "title": "first todo",
+    "description": "learn API",
+    "status": false,
+    "due_date": "2020-03-30T17:00:00.000Z"
+  }</code></pre>
 
 - Response:
-  `{ "id": 11, "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "updatedAt": "2020-03-30T08:15:46.821Z", "createdAt": "2020-03-30T08:15:46.821Z" }`
+  <pre><code>{
+    "id": 1,
+    "title": "first todo",
+    "description": "learn API",
+    "status": false,
+    "due_date": "2020-03-30T17:00:00.000Z",
+    "updatedAt": "2020-03-30T10:26:32.217Z",
+    "createdAt": "2020-03-30T10:26:32.217Z"
+  }</code></pre>
 
-GET /todos/:id ==> Displaying todo by id
+### GET /todos/:id ==> Displaying todo by id
 
 - Response:
-  `{ "id": 1, "title": "learn API", "description": "learn API part-0", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "createdAt": "2020-03-30T05:14:30.520Z", "updatedAt": "2020-03-30T05:32:53.825Z" }`
+  <pre><code>{
+    "id": 1,
+    "title": "first todo",
+    "description": "learn API",
+    "status": false,
+    "due_date": "2020-03-30T17:00:00.000Z",
+    "createdAt": "2020-03-30T10:26:32.217Z",
+    "updatedAt": "2020-03-30T10:26:32.217Z"
+}</code></pre>
 
 - Error Response:
-  `{ "error": "not found" }`
+<pre><code>{ "error": "not found" }</code></pre>
 
-PUT /todos/:id ==> Editing todo by id
+### PUT /todos/:id ==> Editing todo by id
 
 - Request Body:
-  `{ "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z" }`
+<pre><code></code>{
+        "id": 2,
+        "title": "second todo",
+        "description": "learn API and CRUD",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+    }</pre>
 
 - Response:
-  `{ "id": 11, "title": "learnet", "description": "learn API part-11", "status": false, "due_date": "2020-03-30T00:00:00.000Z", "updatedAt": "2020-03-30T08:15:46.821Z", "createdAt": "2020-03-30T08:15:46.821Z" }`
+<pre><code>{
+        "id": 2,
+        "title": "second todo",
+        "description": "learn API and CRUD",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+        "createdAt": "2020-03-30T10:29:53.665Z",
+        "updatedAt": "2020-03-30T10:36:16.940Z"
+    }</code></pre>
 
 - Error Response:
-  `{ "error": "not found" }`
+<pre><code>{ "error": "not found" }</code></pre>
 
-DELETE /todos/:id ==> Delete todo by id
+### DELETE /todos/:id ==> Delete todo by id
 
 - Error Response:
-  `{ "error": "not found" }`
+<pre><code>{ "error": "not found" }</code></pre>
