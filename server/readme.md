@@ -3,7 +3,8 @@
 ### GET /todos ==> Displaying all the todos from database
 
 - Response:
-  <pre><code>[
+```
+	[
     	{
 	        "id": 1,
 	        "title": "first todo",
@@ -22,7 +23,8 @@
 	        "createdAt": "2020-03-30T10:29:53.665Z",
 	        "updatedAt": "2020-03-30T10:29:53.665Z"
     	}
-    ]</code></pre>
+    ]
+```
 
 ### POST /todos ==> Create todo in database
 
