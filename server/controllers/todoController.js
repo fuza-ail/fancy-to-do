@@ -12,7 +12,7 @@ class TodoController {
       })
   }
 
-  static createTodo(req, res) {
+  static createTodo(req, res, next) {
     Todo.create({
       title: req.body.title,
       description: req.body.description,
@@ -27,11 +27,9 @@ class TodoController {
         })
       })
       .then(data => {
-        addToCalendar(data.createdAt,data.due_date,data.title,data.description,req.email)
+        addToCalendar(data.createdAt, data.due_date, data.title, data.description, req.email)
       })
-      .catch(err => {
-        res.status(400).json(err.errors[0]);
-      })
+      .catch(next)
   }
 
   static displayTodo(req, res) {

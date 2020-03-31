@@ -18,7 +18,6 @@ class userController {
         res.status(400).json(err)
       })
   }
-
   static login(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then(user => {
