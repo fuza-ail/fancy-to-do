@@ -9,7 +9,7 @@ const authorization = function (req, res, next) {
           res.status(400).json({ error: 'access forbidden' })
         }
       } else {
-        res.status(404).json({ error: 'book not found' })
+        res.status(404).json({ error: 'todo not found' })
       }
     })
     .catch(err => {

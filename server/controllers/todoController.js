@@ -1,4 +1,5 @@
 const { Todo } = require('../models');
+const calendar = require('../externalAPI')
 
 class TodoController {
   static displayTodos(req, res) {
@@ -20,6 +21,7 @@ class TodoController {
       UserId: req.UserId
     })
       .then((todo) => {
+        // calendar(todo.createdAt,todo.due_date,todo.email)
         res.status(201).json(todo);
       })
       .catch(err => {

@@ -4,26 +4,26 @@
 
 - Response:
 ```
-	[
-    	{
-	        "id": 1,
-	        "title": "first todo",
-	        "description": "learn API",
-	        "status": false,
-	        "due_date": "2020-03-30T17:00:00.000Z",
-	        "createdAt": "2020-03-30T10:26:32.217Z",
-	        "updatedAt": "2020-03-30T10:26:32.217Z"
-    	},
-    	{
-	        "id": 2,
-	        "title": "second todo",
-	        "description": "learn API",
-	        "status": false,
-	        "due_date": "2020-03-30T17:00:00.000Z",
-	        "createdAt": "2020-03-30T10:29:53.665Z",
-	        "updatedAt": "2020-03-30T10:29:53.665Z"
-    	}
-    ]
+[
+	{
+        "id": 1,
+        "title": "first todo",
+        "description": "learn API",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+        "createdAt": "2020-03-30T10:26:32.217Z",
+        "updatedAt": "2020-03-30T10:26:32.217Z"
+	},
+	{
+        "id": 2,
+        "title": "second todo",
+        "description": "learn API",
+        "status": false,
+        "due_date": "2020-03-30T17:00:00.000Z",
+        "createdAt": "2020-03-30T10:29:53.665Z",
+        "updatedAt": "2020-03-30T10:29:53.665Z"
+	}
+]
 ```
 
 ### POST /todos ==> Create todo in database
