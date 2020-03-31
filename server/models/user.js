@@ -25,6 +25,4 @@ module.exports = (sequelize, DataTypes) => {
   return User;
 };
 
-// {
-//   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJmdXphaWwiLCJpYXQiOjE1ODU2MzQyNTh9.yX5CM3eO0XwUNkY9vb6rHQh-DxlTYTLzbuQiVVEJrzU"
-// }
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmdXphaWwiLCJpYXQiOjE1ODU2MzUzNzJ9.qmcgK0Ne1V8zsjMDj9GA3mLaEmijDmvqZf9qYq0zqJ4

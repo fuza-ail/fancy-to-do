@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { hashPassword, checkAccount } = require('../helpers/authentication');
+const { hashPassword, checkAccount } = require('../helpers/bcrypt');
 const jwt = require('jsonwebtoken')
 
 class userController {
@@ -8,7 +8,11 @@ class userController {
     userData.password = hashPassword(req.body.password)
     User.create(userData)
       .then(user => {
-        res.status(201).json(user)
+        const token = jwt.sign({
+          userId: user.id,
+          userEmail: user.email
+        }, "rahasia")
+        res.status(201).json({ access_token: token })
       })
       .catch(err => {
         res.status(400).json(err)
@@ -20,15 +24,16 @@ class userController {
       .then(user => {
         if (user) {
           if (checkAccount(req.body.password, user.password)) {
-            let userData = { id: user.id, email: user.email }
-            jwt.sign(userData,'secret',(err,token)=>{
-              res.status(200).json({token:token})
+            const token = jwt.sign({
+              userId: user.id,
+              userEmail: user.email
             })
-          }else{
-            res.status(401).json({error:'wrong password'})
+            res.status(201).json({ access_token: token },"rahasia")
+          } else {
+            res.status(400).json({ error: 'wrong password' })
           }
-        }else{
-          res.status(404).json({error:'email not found'})
+        } else {
+          res.status(400).json({ error: 'email not found' })
         }
       })
       .catch(err => {
