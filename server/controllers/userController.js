@@ -27,8 +27,8 @@ class userController {
             const token = jwt.sign({
               userId: user.id,
               userEmail: user.email
-            })
-            res.status(201).json({ access_token: token },"rahasia")
+            },"rahasia")
+            res.status(201).json({ access_token: token })
           } else {
             res.status(400).json({ error: 'wrong password' })
           }

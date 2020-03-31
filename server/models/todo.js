@@ -20,12 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     due_date: DataTypes.DATE,
+    userId: DataTypes.INTEGER,
     createdAt: new Date(),
     updatedAt: new Date()
   }, { sequelize })
 
   Todo.associate = function (models) {
     // associations can be defined here
+    Todo.belongsTo(models.User)
   };
   return Todo;
 };
