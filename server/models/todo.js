@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          args: false,
+          args: true,
           msg: 'Title can not be empty'
         }
       }

@@ -1,6 +1,6 @@
 const { Todo } = require('../models');
 
-class Controller {
+class TodoController {
   static displayTodos(req, res) {
     Todo.findAll()
       .then(todos => {
@@ -65,4 +65,4 @@ class Controller {
   }
 }
 
-module.exports = Controller;
+module.exports = TodoController;
