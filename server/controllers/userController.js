@@ -9,8 +9,8 @@ class userController {
     User.create(userData)
       .then(user => {
         const token = jwt.sign({
-          userId: user.id,
-          userEmail: user.email
+          UserId: user.id,
+          UserEmail: user.email
         }, "rahasia")
         res.status(201).json({ access_token: token })
       })
@@ -25,8 +25,8 @@ class userController {
         if (user) {
           if (checkAccount(req.body.password, user.password)) {
             const token = jwt.sign({
-              userId: user.id,
-              userEmail: user.email
+              UserId: user.id,
+              UserEmail: user.email
             },"rahasia")
             res.status(201).json({ access_token: token })
           } else {

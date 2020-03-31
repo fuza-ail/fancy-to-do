@@ -20,7 +20,7 @@ module.exports = {
       due_date: {
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
