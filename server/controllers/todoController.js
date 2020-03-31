@@ -1,5 +1,5 @@
-const { Todo } = require('../models');
-const calendar = require('../externalAPI')
+const { Todo, User } = require('../models');
+const addToCalendar = require('../helpers/externalAPI')
 
 class TodoController {
   static displayTodos(req, res) {
@@ -21,8 +21,13 @@ class TodoController {
       UserId: req.UserId
     })
       .then((todo) => {
-        // calendar(todo.createdAt,todo.due_date,todo.email)
         res.status(201).json(todo);
+        return Todo.findOne({
+          where: { id: todo.id }
+        })
+      })
+      .then(data => {
+        addToCalendar(data.createdAt,data.due_date,data.title,data.description,req.email)
       })
       .catch(err => {
         res.status(400).json(err.errors[0]);

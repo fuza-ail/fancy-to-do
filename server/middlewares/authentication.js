@@ -7,6 +7,7 @@ const authentication = function (req, res, next) {
       const decoded = jwt.verify(token,'rahasia')
       console.log(decoded)
       req.UserId = decoded.UserId
+      req.email = decoded.UserEmail
       next()
     } else {
       res.status(404).json({error: 'token not found'})
