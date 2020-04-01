@@ -20,6 +20,7 @@
         Error message
       </div> -->
     </div>
+
     <!-- TOGGLE -->
     <div id="toggle">
       <button type="button" class="btn btn-info" id="login-btn">Login</button>
@@ -27,7 +28,7 @@
     </div>
 
     <!-- REGISTER -->
-    <div class="register-section">
+    <div class="register-section global">
       <h2>Register</h2>
       <form id="register" class="register-form" method="POST">
         <div class="form-group">
@@ -43,7 +44,7 @@
     </div>
 
     <!-- LOGIN -->
-    <div class="login-section">
+    <div class="login-section global">
       <h2>Login</h2>
       <form id="login" class="register-form">
         <div class="form-group">
@@ -59,7 +60,7 @@
     </div>
 
     <!-- TODO PAGE -->
-    <div class="todo-section">
+    <div class="todo-section global">
       <div id="action">
         <button type="button" class="btn btn-info" id="logout-btn">Logout</button>
         <button type="button" class="btn btn-info" id="add-btn">Add Todo</button>
@@ -81,7 +82,7 @@
 
 
     <!-- ADD POST FORM -->
-    <div class="add-section">
+    <div class="add-section global">
       <h2>Add Todo</h2>
       <form id="add" class="register-form">
         <div class="form-group">
@@ -93,16 +94,36 @@
           <input id="todo-description" type="text" class="form-control" name="description">
         </div>
         <div class="form-group">
-            <label for="due_date">Due Date</label>
-            <input id="todo-due_date" type="date" class="form-control" name="due_date">
-          </div>
+          <label for="due_date">Due Date</label>
+          <input id="todo-due_date" type="date" class="form-control" name="due_date">
+        </div>
         <button type="submit" class="btn btn-info">Add Todo</button>
       </form><br>
-      <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+      <button type="button" class="btn btn-secondary" id="cancel-add">Cancel</button>
+    </div>
+
+    <!-- EDIT FORM -->
+    <div class="edit-section global">
+      <h2>Edit Todo</h2>
+      <form id="edit" class="register-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" name="title">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input  type="text" class="form-control" name="description">
+        </div>
+        <div class="form-group">
+          <label for="due_date">Due Date</label>
+          <input  type="date" class="form-control" name="due_date">
+        </div>
+        <button type="submit" class="btn btn-info">Edit Todo</button>
+      </form><br>
+      <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
     </div>
 
   </div>
-
 
   <script src="main.js"></script>
 </body>

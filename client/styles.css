@@ -15,7 +15,7 @@ background: rgb(248, 248, 248);
   margin-left: 5px;
   margin-right:5px;
 }
-.register-section, .login-section, .add-section{
+.register-section, .login-section, .add-section, .edit-section{
   margin:30px auto;
   width: 500px;
   padding:30px;
