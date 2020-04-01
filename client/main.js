@@ -1,7 +1,8 @@
 $(document).ready(function () {
   $(".register-section").hide();
   $(".login-section").hide();
-  $(".todo-section").hide()
+  $(".todo-section").hide();
+  $(".add-section").hide();
 
   $("#login-btn").click(function () {
     $(".login-section").show();
@@ -13,7 +14,7 @@ $(document).ready(function () {
     $(".login-section").hide()
   });
 
-  // login
+  // LOGIN
   $("#login").submit(function (e) {
     e.preventDefault()
     const email = $("#email-login").val();
@@ -58,14 +59,9 @@ $(document).ready(function () {
       .fail(function (err) {
         console.log('error:', err)
       })
-
-      // register
-      $.ajax({
-
-      })
   })
 
-  //register
+  // REGISTER
   $("#register").submit(function (e) {
     e.preventDefault()
     const email = $("#email-reg").val();
@@ -110,8 +106,15 @@ $(document).ready(function () {
       .fail(function (err) {
         console.log('error:', err)
       })
-
   })
 
+  // ADD FORM
+  $("#add-btn").click(function () {
+    $(".todo-section").hide();
+    $("#toggle").hide();
+    $(".add-section").show();
+  })
+
+  // ADD TODO
 })
 

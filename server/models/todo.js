@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     createdAt: new Date(),
     updatedAt: new Date()
-  }, { sequelize })
+  }, { 
+    sequelize,
+    hooks:{
+      beforeCreate : (data,option)=>{
+        data.status = false
+      }
+  } })
 
   Todo.associate = function (models) {
     // associations can be defined here

@@ -61,9 +61,8 @@
     <!-- TODO PAGE -->
     <div class="todo-section">
       <div id="action">
-        <button type="button" class="btn btn-info" id="login-btn">Logout</button>
-        <button type="button" class="btn btn-info" id="addd-btn">Add Todo</button>
-
+        <button type="button" class="btn btn-info" id="logout-btn">Logout</button>
+        <button type="button" class="btn btn-info" id="add-btn">Add Todo</button>
       </div>
       <table class="table">
         <thead class="thead-dark">
@@ -76,11 +75,34 @@
           </tr>
         </thead>
         <tbody id="todoList">
-          
         </tbody>
       </table>
     </div>
+
+
+    <!-- ADD POST FORM -->
+    <div class="add-section">
+      <h2>Add Todo</h2>
+      <form id="add" class="register-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="todo-title" type="text" class="form-control" name="title">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="todo-description" type="text" class="form-control" name="description">
+        </div>
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+            <input id="todo-due_date" type="date" class="form-control" name="due_date">
+          </div>
+        <button type="submit" class="btn btn-info">Add Todo</button>
+      </form><br>
+      <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+    </div>
+
   </div>
+
 
   <script src="main.js"></script>
 </body>
