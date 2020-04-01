@@ -1,0 +1,32 @@
+body{
+background: rgb(248, 248, 248);
+}
+#title{
+  text-align: center;
+  margin: 30px auto;
+}
+
+#toggle{
+  margin: auto;
+  text-align: center;
+}
+#toggle button{
+  width: 150px;
+  margin-left: 5px;
+  margin-right:5px;
+}
+.register-section, .login-section{
+  margin:30px auto;
+  width: 500px;
+  padding:30px;
+  border-radius:10px;
+  background:white;
+  box-shadow: rgb(221, 221, 221) 5px 5px;
+}
+.register{
+  display: none;
+}
+table{
+  margin: 20px auto;
+  text-align: center;
+}

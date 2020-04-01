@@ -10,6 +10,7 @@ class TodoController {
       .catch(err => {
         res.status(500).json(err);
       })
+
   }
 
   static createTodo(req, res, next) {
