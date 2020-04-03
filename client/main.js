@@ -17,17 +17,20 @@ $(document).ready(function () {
 
   // LOGIN
   $("#login").submit(function (e) {
+    $("#todoList").html("")
     e.preventDefault()
     const email = $("#email-login").val();
     const password = $("#password-login").val();
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:3000/login",
+      url: "http://localhost:8000/login",
       data: { email: email, password: password }
     })
       .done(function (data) {
         localStorage.setItem("access_token", data.access_token);
+        $("#email-login").val('')
+        $("#password-login").val('')
         $("#error").hide();
         $(".register-section").hide();
         $(".login-section").hide();
@@ -35,7 +38,7 @@ $(document).ready(function () {
         $(".todo-section").show();
         $.ajax({
           type: "GET",
-          url: "http://localhost:3000/todos",
+          url: "http://localhost:8000/todos",
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -76,11 +79,13 @@ $(document).ready(function () {
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:3000/register",
+      url: "http://localhost:8000/register",
       data: { email: email, password: password }
     })
       .done(function (data) {
         localStorage.setItem("access_token", data.access_token);
+        $("#password-reg").val('');
+        $("#email-reg").val('')
         $("#error").hide();
         $(".register-section").hide();
         $(".login-section").hide();
@@ -88,7 +93,7 @@ $(document).ready(function () {
         $(".todo-section").show();
         $.ajax({
           type: "GET",
-          url: "http://localhost:3000/todos",
+          url: "http://localhost:8000/todos",
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -141,7 +146,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:3000/todos",
+      url: "http://localhost:8000/todos",
       headers: {
         access_token: localStorage.getItem('access_token')
       },
@@ -152,7 +157,7 @@ $(document).ready(function () {
         $(".add-section").hide();
         $.ajax({
           type: "GET",
-          url: "http://localhost:3000/todos",
+          url: "http://localhost:8000/todos",
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -196,7 +201,7 @@ $(document).ready(function () {
   $("#todoList").on("click", ".deleteBtn", function (e) {
     $.ajax({
       type: "DELETE",
-      url: `http://localhost:3000/todos/${e.target.value}`,
+      url: `http://localhost:8000/todos/${e.target.value}`,
       headers: {
         access_token: localStorage.getItem('access_token')
       }
@@ -204,7 +209,7 @@ $(document).ready(function () {
       .done(function (todo) {
         $.ajax({
           type: "GET",
-          url: "http://localhost:3000/todos",
+          url: "http://localhost:8000/todos",
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -241,7 +246,7 @@ $(document).ready(function () {
   $("#todoList").on("click", ".editBtn", function (e) {
     $.ajax({
       type: "GET",
-      url: `http://localhost:3000/todos/${e.target.value}`,
+      url: `http://localhost:8000/todos/${e.target.value}`,
       headers: {
         access_token: localStorage.getItem('access_token')
       }
@@ -296,7 +301,7 @@ $(document).ready(function () {
     const due_date = $("#editDueDate").val();
     $.ajax({
       type: "PUT",
-      url: `http://localhost:3000/todos/${e.target.value}`,
+      url: `http://localhost:8000/todos/${e.target.value}`,
       data: { title, description, due_date },
       headers: {
         access_token: localStorage.getItem('access_token')
@@ -306,7 +311,7 @@ $(document).ready(function () {
         $(".edit-section").hide();
         $.ajax({
           type: "GET",
-          url: "http://localhost:3000/todos",
+          url: "http://localhost:8000/todos",
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -341,9 +346,39 @@ $(document).ready(function () {
 
   // LOGOUT
   $("#logout-btn").click(() => {
-    localStorage.removeItem('access_token')
-    location.reload();
+    localStorage.removeItem('access_token');
+    $(".register-section").hide();
+    $(".login-section").hide();
+    $(".todo-section").hide();
+    $(".add-section").hide();
+    $(".edit-section").hide();
+    $("#toggle").show()
   })
 
 })
 
+// GOOGLE
+function onSignIn(googleUser) {
+  let profile = googleUser.getBasicProfile();
+  let id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: 'POST',
+    url: 'http://localhost:8000/loginGoogle',
+    data: {
+      token: id_token
+    },
+    statusCode :{
+      200: function(response){
+        localStorage.setItem('access_token',response.access_token)
+      }
+    }
+  })
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+    localStorage.removeItem('access_token')
+  });
+}

@@ -1,6 +1,7 @@
 body{
 background: rgb(248, 248, 248);
 }
+
 #title{
   text-align: center;
   margin: 30px auto;
@@ -29,4 +30,10 @@ background: rgb(248, 248, 248);
 table{
   margin: 20px auto;
   text-align: center;
+}
+
+#google{
+  margin:20px auto;
+  text-align: center;
+  width: 120px;
 }
