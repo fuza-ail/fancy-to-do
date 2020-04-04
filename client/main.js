@@ -107,7 +107,7 @@ function add(e) {
   const title = $("#add-input-title").val();
   const description = $("#add-input-description").val();
   const due_date = $("#add-input-date").val();
-  Swal.fire('Added!', 'successfully adding todo!', 'success')
+  
   $.ajax({
     type: "POST",
     url: "http://localhost:8000/todos",
@@ -117,6 +117,7 @@ function add(e) {
     data: { title, description, due_date }
   })
     .done(function (data) {
+      Swal.fire('Added!', 'successfully adding todo!', 'success')
       $("#add-input-title").val('')
       $("#add-input-description").val('')
       $("#add-input-date").val('')
@@ -154,35 +155,36 @@ function deleteTodo(e) {
         'Your file has been deleted.',
         'success'
       )
-    }
-    $.ajax({
-      type: "DELETE",
-      url: `http://localhost:8000/todos/${e.target.value}`,
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      }
-    })
-      .done(function (todo) {
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
+      $.ajax({
+        type: "DELETE",
+        url: `http://localhost:8000/todos/${e.target.value}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .done(function (todo) {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:8000/todos",
+            headers: {
+              access_token: localStorage.getItem('access_token')
+            }
+          })
+            .done(function (todos) {
+              $("#list").html("")
+              showList()
+    
+            })
+            .fail(function (err) {
+              console.log(err)
+            })
+          $(".todo-section").show();
         })
-          .done(function (todos) {
-            $("#list").html("")
-            showList()
-  
-          })
-          .fail(function (err) {
-            console.log(err)
-          })
-        $(".todo-section").show();
-      })
-      .fail(function (err) {
-        console.log(err)
-      })
+        .fail(function (err) {
+          console.log(err)
+        })
+    }
+    
   })
   
 }
@@ -221,6 +223,7 @@ function cancelEdit(e){
   $('.global').hide();
   showList()
   $('#list').html('')
+  $('#edit-form').hide()
   $('.todo-section').show();
   $('#add-form').show()
 }
@@ -241,6 +244,7 @@ function editSubmit(e){
   })
     .done(function (e) {
       showList()
+      
       $('.global').hide()
       $('#list').html('')
       $(".todo-section").show();
