@@ -312,8 +312,8 @@ function onSignIn(googleUser) {
   .done(function(){
     $('#list').html('')
     $('.global').hide()
-    $(".todo-section").show();
     showList()
+    $(".todo-section").show();
   })
   .fail(function(err){
     console.log(err)
