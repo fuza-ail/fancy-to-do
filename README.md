@@ -7,12 +7,12 @@ This is Todo app that can record your tasks and send it to your email.
 ---
 ### API
 1. Google SIgn in
-2. SendGrid
+2. [SendGrid](https://sendgrid.com/)
 
 ---
 ### Framework / Library
-1. Bootstrap
-2. SWAL2
+1. [Bootstrap](https://getbootstrap.com/)
+2. [SWAL2](https://sweetalert2.github.io/)
 
 ---
 ### RESTful API
