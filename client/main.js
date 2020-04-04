@@ -1,363 +1,272 @@
-$(document).ready(function () {
-  $(".register-section").hide();
-  $(".login-section").hide();
-  $(".todo-section").hide();
-  $(".add-section").hide();
-  $(".edit-section").hide();
-
-  $("#login-btn").click(function () {
-    $(".login-section").show();
-    $(".register-section").hide();
-  });
-
-  $("#register-btn").click(function () {
-    $(".register-section").show();
-    $(".login-section").hide()
-  });
-
-  // LOGIN
-  $("#login").submit(function (e) {
-    $("#todoList").html("")
-    e.preventDefault()
-    const email = $("#email-login").val();
-    const password = $("#password-login").val();
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8000/login",
-      data: { email: email, password: password }
-    })
-      .done(function (data) {
-        localStorage.setItem("access_token", data.access_token);
-        $("#email-login").val('')
-        $("#password-login").val('')
-        $("#error").hide();
-        $(".register-section").hide();
-        $(".login-section").hide();
-        $("#toggle").hide();
-        $(".todo-section").show();
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
-        })
-          .done(function (todos) {
-            todos.forEach(el => {
-              $("#todoList").append(`
-              <tr>
-                <td>${el.id}</td>
-                <td>${el.title}</td>
-                <td>${el.description}</td>
-                <td>${el.due_date.slice(0, 10)}</td>
-                <td>
-                  <button class="btn btn-primary editBtn" value="${el.id}">Edit</button> |
-                  <button class="btn btn-danger deleteBtn"  value="${el.id}" >Delete</button>
-                </td>
-              </tr>
-            `)
-            })
-          })
-
-      })
-      .fail(function (err) {
-        $("#error").html("")
-        $("#error").append(`
-        <div class="alert alert-danger" role="alert">
-        ${err.responseJSON.error}
-      </div>
-        `)
-      })
+if (localStorage.getItem('access_token')) {
+  $(document).ready(function () {
+    $('.global').hide();
+    showList()
+    $('.todo-section').show();
   })
+} else {
+  $(document).ready(function () {
+    $('.global').hide();
+    $('.toggle').show();
+  })
+}
 
-  // REGISTER
-  $("#register").submit(function (e) {
-    e.preventDefault()
-    const email = $("#email-reg").val();
-    const password = $("#password-reg").val();
+function showLogin() {
+  $('.login-section').show()
+  $('.register-section').hide()
+  $('.google-section').show()
+}
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8000/register",
-      data: { email: email, password: password }
+function showRegister() {
+  $('.login-section').hide()
+  $('.register-section').show()
+  $('.google-section').show()
+}
+
+// REGISTER
+function register(e) {
+  e.preventDefault()
+  const email = $("#register-input-email").val();
+  const password = $("#register-input-password").val();
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/register",
+    data: { email, password }
+  })
+    .done(function (data) {
+      localStorage.setItem("access_token", data.access_token);
+      $("#register-input-password").val('');
+      $("#register-input-email").val('')
+      $('.global').hide();
+      $(".todo-section").show();
+      showList()
     })
-      .done(function (data) {
-        localStorage.setItem("access_token", data.access_token);
-        $("#password-reg").val('');
-        $("#email-reg").val('')
-        $("#error").hide();
-        $(".register-section").hide();
-        $(".login-section").hide();
-        $("#toggle").hide();
-        $(".todo-section").show();
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
-        })
-          .done(function (todos) {
-            todos.forEach(el => {
-              $("#todoList").append(`
-              <tr>
-                <td>${el.id}</td>
-                <td>${el.title}</td>
-                <td>${el.description}</td>
-                <td>${el.due_date.slice(0, 10)}</td>
-                <td>
-                  <button class="btn btn-primary editBtn"  value="${el.id}">Edit</button>|
-                  <button class="btn btn-danger deleteBtn"  value="${el.id}" >Delete</button>
-                </td>
-              </tr>
-            `)
-            })
-          })
-          .fail(function (err) {
-            console.log('error:', err)
-          })
-
-      })
-      .fail(function (err) {
-        console.log(err)
-        $("#error").html("")
-        $("#error").append(`
+    .fail(function (err) {
+      console.log(err)
+      $("#error").html("")
+      $("#error").append(`
           <div class="alert alert-danger" role="alert">
             ${err.responseJSON.errors[0].message}
           </div>
         `)
-      })
-  })
-
-  // ADD FORM
-  $("#add-btn").click(function () {
-    $(".todo-section").hide();
-    $("#toggle").hide();
-    $(".add-section").show();
-  })
-
-  // ADD TODO
-  $("#add").submit(function (e) {
-    e.preventDefault();
-    const title = $("#todo-title").val();
-    const description = $("#todo-description").val();
-    const due_date = $("#todo-due_date").val();
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8000/todos",
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      },
-      data: { title, description, due_date }
     })
-      .done(function (data) {
-        $("#error").hide();
-        $(".add-section").hide();
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
-        })
-          .done(function (todos) {
-            $("#todoList").html("")
-            todos.forEach(el => {
-              $("#todoList").append(`
-            <tr>
-            <td>${el.id}</td>
-            <td>${el.title}</td>
-            <td>${el.description}</td>
-            <td>${el.due_date.slice(0, 10)}</td>
-            <td>
-            <button class="btn btn-primary editBtn"  value="${el.id}">Edit</button> |
-            <button class="btn btn-danger deleteBtn"  value="${el.id}" >Delete</button>
-            </td>
-            </tr>
-            `)
-            })
-          })
-          .fail(function (err) {
-            console.log(err)
-          })
-        $(".todo-section").show();
-      })
-      .fail(function (err) {
-        console.log('error disisni', err.responseJSON.errors[0].message)
-        $("#error").html("")
-        $("#error").append(`
-          <div class="alert alert-danger" role="alert">
-            ${err.responseJSON.errors[0].message}
-          </div>
-        `)
-        $("#error").show()
-      })
+}
+
+// LOGIN
+function login(e) {
+  e.preventDefault();
+  $("#error").html("")
+  $("#list").html("")
+  const email = $("#login-input-email").val();
+  const password = $("#login-input-password").val();
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/login",
+    data: { email: email, password: password }
   })
+    .done(function (data) {
+      localStorage.setItem("access_token", data.access_token);
+      $("#login-input-email").val('')
+      $("#login-input-password").val('')
 
-  // DELETE TODO
-  $("#todoList").html("")
-  $("#todoList").on("click", ".deleteBtn", function (e) {
-    $.ajax({
-      type: "DELETE",
-      url: `http://localhost:8000/todos/${e.target.value}`,
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      }
+      $('.global').hide()
+      $(".todo-section").show();
+      showList()
     })
-      .done(function (todo) {
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
-        })
-          .done(function (todos) {
-            $("#todoList").html("")
-            todos.forEach(el => {
-              $("#todoList").append(`
-            <tr>
-            <td>${el.id}</td>
-            <td>${el.title}</td>
-            <td>${el.description}</td>
-            <td>${el.due_date.slice(0, 10)}</td>
-            <td>
-            <button class="btn btn-primary editBtn" value="${el.id}">Edit</button> |
-            <button class="btn btn-danger deleteBtn" value="${el.id}" >Delete</button>
-            </td>
-            </tr>
-            `)
-            })
-          })
-          .fail(function (err) {
-            console.log(err)
-          })
-        $(".todo-section").show();
-      })
-      .fail(function (err) {
-        console.log(err)
-      })
-  })
-
-  // EDIT FORM
-  $("#todoList").html("")
-  $("#todoList").on("click", ".editBtn", function (e) {
-    $.ajax({
-      type: "GET",
-      url: `http://localhost:8000/todos/${e.target.value}`,
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      }
-    })
-      .done(function (todo) {
-
-        $("#edit").append(`
-      <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" id="editTitle" class="form-control" name="title" value="${todo.title}" >
-      </div>
-      <div class="form-group">
-      <label for="description">Description</label>
-      <input  type="text" id="editDescription" class="form-control" name="description" value="${todo.description}" >
-      </div>
-      <div class="form-group">
-      <label for="due_date">Due Date</label>
-      <input  type="date" id="editDueDate" class="form-control" name="due_date" value="${todo.due_date.slice(0, 10)}" >
-      </div>
-      <button value="${todo.id}" id="edit-btn" class="btn btn-info">Update</button>
+    .fail(function (err) {
+      $("#error").html("")
+      $("#error").append(`
+      <div class="alert alert-danger" role="alert">
+      ${err.responseJSON.error}
+    </div>
       `)
-        $(".todo-section").hide();
-        $("#toggle").hide();
-        $(".edit-section").show();
-      })
-      .fail(function (err) {
-        console.log(err)
-      })
-  })
-
-  // CANCEL EDIT
-  $("#cancel-edit").click(function () {
-    $(".todo-section").show();
-    $("#toggle").hide();
-    $(".edit-section").hide();
-  })
-
-  // CANCEL ADD
-  $("#cancel-add").click(function () {
-    $("#error").hide();
-    $(".todo-section").show();
-    $("#toggle").hide();
-    $(".add-section").hide();
-  })
-
-  // EDIT TODO
-  $("#edit").html("")
-  $("#edit").on('click', '#edit-btn', function (e) {
-    e.preventDefault()
-    const title = $("#editTitle").val();
-    const description = $("#editDescription").val();
-    const due_date = $("#editDueDate").val();
-    $.ajax({
-      type: "PUT",
-      url: `http://localhost:8000/todos/${e.target.value}`,
-      data: { title, description, due_date },
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      }
     })
-      .done(function (e) {
-        $(".edit-section").hide();
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8000/todos",
-          headers: {
-            access_token: localStorage.getItem('access_token')
-          }
+}
+
+// LOGOUT
+function logout() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+  $('.global').hide()
+  $('.toggle').show()
+  $('.list').html('')
+  localStorage.removeItem('access_token')
+}
+
+// ADD
+function add(e) {
+  e.preventDefault();
+  const title = $("#add-input-title").val();
+  const description = $("#add-input-description").val();
+  const due_date = $("#add-input-date").val();
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/todos",
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    },
+    data: { title, description, due_date }
+  })
+    .done(function (data) {
+      $("#add-input-title").val('')
+      $("#add-input-description").val('')
+      $("#add-input-date").val('')
+      $(".global").hide();
+      showList()
+      $("#list").html("")
+      $('.todo-section').show();
+    })
+    .fail(function (err) {
+      console.log('error disisni', err.responseJSON.errors[0].message)
+      $("#error").html("")
+      $("#error").append(`
+        <div class="alert alert-danger" role="alert">
+          ${err.responseJSON.errors[0].message}
+        </div>
+      `)
+      $("#error").show()
+    })
+}
+
+// DELETE
+function deleteTodo(e) {
+  $.ajax({
+    type: "DELETE",
+    url: `http://localhost:8000/todos/${e.target.value}`,
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(function (todo) {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/todos",
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .done(function (todos) {
+          $("#list").html("")
+          showList()
+
         })
-          .done(function (todos) {
-            $("#todoList").html("")
-            todos.forEach(el => {
-              $("#todoList").append(`
-            <tr>
-            <td>${el.id}</td>
-            <td>${el.title}</td>
-            <td>${el.description}</td>
-            <td>${el.due_date.slice(0, 10)}</td>
-            <td>
-            <button class="btn btn-primary editBtn"  value="${el.id}">Edit</button> |
-            <button class="btn btn-danger deleteBtn"  value="${el.id}" >Delete</button>
-            </td>
+        .fail(function (err) {
+          console.log(err)
+        })
+      $(".todo-section").show();
+    })
+    .fail(function (err) {
+      console.log(err)
+    })
+}
+
+// EDIT FORM
+function editTodo(e) {
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:8000/todos/${e.target.value}`,
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(function (todo) {
+      console.log(todo)
+      $('#edit-form').attr('class',`${todo.id}`)
+      $('#list').html('')
+      $('#add-form').hide()
+      $('#edit-input-title').val(todo.title)
+      $('#edit-input-description').val(todo.description)
+      $('#edit-input-date').val(todo.due_date.slice(0,10))
+      // $(".global").hide();
+      // $("#add-form").hide();
+      $("#edit-form").show()
+      showList()
+    })
+    .fail(function (err) {
+      console.log(err)
+    })
+}
+
+// Cancle edit
+function cancelEdit(e){
+  e.preventDefault()
+  $('.global').hide();
+  showList()
+  $('#list').html('')
+  $('.todo-section').show();
+  $('#add-form').show()
+}
+
+// SUBMIT EDIT
+function editSubmit(e){
+  e.preventDefault()
+  const title = $('#edit-input-title').val()
+  const description = $('#edit-input-description').val()
+  const due_date = $('#edit-input-date').val()
+  $.ajax({
+    type: "PUT",
+    url: `http://localhost:8000/todos/${e.target.className}`,
+    data: { title, description, due_date },
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(function (e) {
+      showList()
+      $('.global').hide()
+      $('#list').html('')
+      $(".todo-section").show();
+      $('#edit-form').hide()
+      $('#add-form').show()
+    })
+    .fail(function (err) {
+      console.log(err)
+    })
+}
+
+// SHOW LIST
+function showList() {
+  $("#error").html("")
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8000/todos",
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(function (todos) {
+      todos.forEach(el => {
+        let status
+        if (el.status == true) {
+          status = 'checked'
+        }
+        $("#list").append(`
+            <tr id="table-body tb-1">
+              <td>${el.title}</td>
+              <td>${el.description}</td>
+              <td>${el.due_date.slice(0, 10)}</td>
+              <td style="width: 200px;">
+                <button class="btn btn-dark edit-button" style="width: 80px !important;" value="${el.id}" onclick= "editTodo(event)">Edit</button>
+                <button class="btn btn-danger delete-button" style="width: 80px !important;" value="${el.id}" onclick="deleteTodo(event)">Delete</button>
+              </td>
+              <td>
+                <input type="checkbox" ${status} onclick="updateStatus(event)" id="${el.id}" value="${el.status}">
+              </td>
             </tr>
-            `)
-            })
-          })
-          .fail(function (err) {
-            console.log(err)
-          })
-        $(".todo-section").show();
+          `)
       })
-      .fail(function (err) {
-        console.log(err)
-      })
+    })
+    .fail(function (err) {
+      console.log('error:', err)
+    })
+}
 
-  })
-
-  // LOGOUT
-  $("#logout-btn").click(() => {
-    localStorage.removeItem('access_token');
-    $(".register-section").hide();
-    $(".login-section").hide();
-    $(".todo-section").hide();
-    $(".add-section").hide();
-    $(".edit-section").hide();
-    $("#toggle").show()
-  })
-
-})
-
-// GOOGLE
+// // GOOGLE
 function onSignIn(googleUser) {
   let profile = googleUser.getBasicProfile();
   let id_token = googleUser.getAuthResponse().id_token;
@@ -373,12 +282,35 @@ function onSignIn(googleUser) {
       }
     }
   })
+  .done(function(){
+    $('.global').hide()
+    $(".todo-section").show();
+    showList()
+  })
+  .fail(function(err){
+    console.log(err)
+  })
 }
 
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-    localStorage.removeItem('access_token')
-  });
+
+// EDIT status
+function updateStatus(e){
+  console.log(e.target)
+  let dataStatus
+  let status = e.target.value
+  if(status){
+    console.log(status)
+    dataStatus = false
+  }else{
+    dataStatus = true
+  }
+  console.log(dataStatus)
+  $.ajax({
+    type: "PUT",
+    url: `http://localhost:8000/todos/${e.target.id}`,
+    data: { status: dataStatus },
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
 }

@@ -18,17 +18,114 @@
 <body>
   <div class="container">
     <h1 id="title">Fancy Todo</h1>
-    <div id="error" class="alert">
-
-    </div>
+    <div id="error" class="alert"></div>
 
     <!-- TOGGLE -->
-    <div id="toggle">
-      <button type="button" class="btn btn-info" id="login-btn">Login</button>
-      <button type="button" class="btn btn-dark" id="register-btn">Register</button>
+    <div class="toggle global">
+      <button class="btn btn-info" id="login-button" onclick="showLogin()">Login</button>
+      <button class="btn btn-dark" id="register-button" onclick="showRegister()">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="login-section global">
+      <h2>Login</h2>
+      <form id="login-submit" onsubmit="login(event)">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="login-input-email" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="login-input-password">
+        </div>
+        <button type="submit" class="btn btn-info">Login</button>
+      </form>
     </div>
 
     <!-- REGISTER -->
+    <div class="register-section global">
+      <h2>Register</h2>
+      <form id="register-submit" onsubmit="register(event)">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="register-input-email" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="register-input-password">
+        </div>
+        <button type="submit" class="btn btn-dark">register</button>
+      </form>
+    </div>
+
+    <!-- Google Login -->
+    <div class="google-section global" style="text-align: center;margin: auto;">
+      <button class="btn btn-danger" style="width: 500px !important;">
+          <div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
+      </button>
+    </div>
+
+    <!-- TODO DISPLAY -->
+    <div class="todo-section global">
+      <h2>Your Todo List</h2>
+      <button class="btn btn-info" id="logout-button" onclick="logout()">Logout</button>
+      <!-- add -->
+      <form id="add-form" onsubmit="add(event)">
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Title" id="add-input-title">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Description" id="add-input-description">
+          </div>
+          <div class="col">
+            <input type="date" class="form-control" id="add-input-date">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-light" id="add-submit" style="width: 80px !important;">Add</button>
+      </form>
+      <!-- edit form -->
+      <form 
+     class="global" id="edit-form" onsubmit="editSubmit(event)">
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Title" id="edit-input-title">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Description" id="edit-input-description">
+          </div>
+          <div class="col">
+            <input type="date" class="form-control" id="edit-input-date">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark" id="edit-submit" style="width: 80px !important;"
+          >Edit</button>
+        <button class="btn btn-dark" id="cancel-submit" style="width: 80px !important;"
+          onclick="cancelEdit(event)">Cancel</button>
+      </form>
+
+      <table class="table">
+        <thead class="thead-dark">
+          <tr id="table-head">
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Due date</th>
+            <th scope="col">Option</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="list">
+          <!-- here the list of todo -->
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <!-- <div id="toggle">
+      <button type="button" class="btn btn-info" id="login-btn">Login</button>
+      <button type="button" class="btn btn-dark" id="register-btn">Register</button>
+    </div>
     <div class="register-section global">
       <h2>Register</h2>
       <form id="register" class="register-form" method="POST">
@@ -44,7 +141,7 @@
       </form>
     </div>
 
-    <!-- LOGIN -->
+    
     <div class="login-section global">
       <h2>Login</h2>
       <form id="login" class="register-form">
@@ -60,7 +157,7 @@
       </form>
     </div>
 
-    <!-- TODO PAGE -->
+    
     <div class="todo-section global">
       <div id="action">
         <button type="button" class="btn btn-info" id="logout-btn">Logout</button>
@@ -69,11 +166,12 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">ID</th>
+            <th scope="col" >ID</th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Due Date</th>
             <th scope="col">Options</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody id="todoList">
@@ -82,7 +180,7 @@
     </div>
 
 
-    <!-- ADD POST FORM -->
+    
     <div class="add-section global">
       <h2>Add Todo</h2>
       <form id="add" class="register-form">
@@ -103,7 +201,7 @@
       <button type="button" class="btn btn-secondary" id="cancel-add">Cancel</button>
     </div>
 
-    <!-- EDIT FORM -->
+    
     <div class="edit-section global">
       <h2>Edit Todo</h2>
       <form id="edit" class="register-form">
@@ -112,12 +210,12 @@
       <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
     </div>
 
-    <!-- EXTERNAL LOGIN -->
+    
     <div class="external-login ">
       <div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
     <a href="#" onclick="signOut()">signout</a>
-  </div>
+  </div> -->
 
   </div>
 

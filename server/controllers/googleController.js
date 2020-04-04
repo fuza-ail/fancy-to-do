@@ -3,16 +3,15 @@ const { OAuth2Client } = require('google-auth-library');
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const { hashPassword } = require('../helpers/bcrypt');
-const client = new OAuth2Client('527992805647-u8gb95q95eau1g1o33doef2lmab16jce.apps.googleusercontent.com');
+const client = new OAuth2Client(process.env.LoginClientId);
 
 class GoogleController {
   static loginGoogle(req, res) {
     let token = req.body.token;
     let userData = {};
-    console.log('token')
     client.verifyIdToken({
       idToken: token,
-      audience: '527992805647-u8gb95q95eau1g1o33doef2lmab16jce.apps.googleusercontent.com'
+      audience: process.env.LoginClientId
     })
       .then(data => {
         const payload = data.getPayload();
@@ -33,9 +32,9 @@ class GoogleController {
       })
       .then(theUser => {
         const token = jwt.sign({
-          email: theUser.email,
-          id: theUser.id
-        }, 'rahasia')
+          UserEmail: theUser.email,
+          UserId: theUser.id
+        }, process.env.TokenKey)
         res.status(200).json({
           access_token: token
         })

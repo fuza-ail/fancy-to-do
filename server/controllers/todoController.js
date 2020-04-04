@@ -1,5 +1,5 @@
 const { Todo, User } = require('../models');
-const addToCalendar = require('../helpers/externalAPI')
+const addToCalendar = require('../helpers/googleCalendarAPi')
 
 class TodoController {
   static displayTodos(req, res) {
@@ -28,7 +28,7 @@ class TodoController {
         })
       })
       .then(data => {
-        addToCalendar(data.createdAt, data.due_date, data.title, data.description, req.email)
+        // addToCalendar(data.createdAt, data.due_date, data.title, data.description, req.email)
       })
       .catch(next)
   }

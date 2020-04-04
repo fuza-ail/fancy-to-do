@@ -11,7 +11,7 @@ class userController {
         const token = jwt.sign({
           UserId: user.id,
           UserEmail: user.email
-        }, "rahasia")
+        }, process.env.TokenKey)
         res.status(201).json({ access_token: token })
       })
       .catch(err => {
@@ -26,7 +26,7 @@ class userController {
             const token = jwt.sign({
               UserId: user.id,
               UserEmail: user.email
-            },"rahasia")
+            },process.env.TokenKey)
             res.status(201).json({ access_token: token })
           } else {
             res.status(400).json({ error: 'wrong password' })
