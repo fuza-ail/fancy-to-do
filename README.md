@@ -4,17 +4,17 @@
 ### Description
 This is Todo app that can record your tasks and send it to your email.
 
---
+---
 ### API
 1. Google SIgn in
 2. SendGrid
 
---
+---
 ### Framework / Library
 1. Bootstrap
 2. SWAL2
 
---
+---
 ### RESTful API
 
 #### GET /todos ==> Displaying all the todos from database
