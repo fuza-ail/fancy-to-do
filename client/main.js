@@ -246,7 +246,7 @@ function showList() {
           status = 'checked'
         }
         $("#list").append(`
-            <tr id="table-body tb-1">
+            <tr id="table-body " class="${status}" >
               <td>${el.title}</td>
               <td>${el.description}</td>
               <td>${el.due_date.slice(0, 10)}</td>
@@ -295,16 +295,15 @@ function onSignIn(googleUser) {
 
 // EDIT status
 function updateStatus(e){
-  console.log(e.target)
+  showList()
   let dataStatus
   let status = e.target.value
-  if(status){
-    console.log(status)
+  if(status == 'true'){
     dataStatus = false
   }else{
     dataStatus = true
   }
-  console.log(dataStatus)
+
   $.ajax({
     type: "PUT",
     url: `http://localhost:8000/todos/${e.target.id}`,
@@ -312,5 +311,9 @@ function updateStatus(e){
     headers: {
       access_token: localStorage.getItem('access_token')
     }
+  })
+  .done(function(){
+    $('#list').html('')
+    showList()
   })
 }
