@@ -28,14 +28,16 @@ function register(e) {
   e.preventDefault()
   const email = $("#register-input-email").val();
   const password = $("#register-input-password").val();
-
+  
   $.ajax({
     type: "POST",
     url: "http://localhost:8000/register",
     data: { email, password }
   })
     .done(function (data) {
+      Swal.fire('Registered', 'successfully register!', 'success')
       localStorage.setItem("access_token", data.access_token);
+      $('#list').html('')
       $("#register-input-password").val('');
       $("#register-input-email").val('')
       $('.global').hide();
@@ -60,13 +62,14 @@ function login(e) {
   $("#list").html("")
   const email = $("#login-input-email").val();
   const password = $("#login-input-password").val();
-
+  
   $.ajax({
     type: "POST",
     url: "http://localhost:8000/login",
     data: { email: email, password: password }
   })
     .done(function (data) {
+      Swal.fire('Logged In!', 'successfully Login!', 'success')
       localStorage.setItem("access_token", data.access_token);
       $("#login-input-email").val('')
       $("#login-input-password").val('')
@@ -87,6 +90,7 @@ function login(e) {
 
 // LOGOUT
 function logout() {
+  Swal.fire('Log Out!', 'successfully logged out!', 'success');
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     console.log('User signed out.');
@@ -103,7 +107,7 @@ function add(e) {
   const title = $("#add-input-title").val();
   const description = $("#add-input-description").val();
   const due_date = $("#add-input-date").val();
-
+  Swal.fire('Added!', 'successfully adding todo!', 'success')
   $.ajax({
     type: "POST",
     url: "http://localhost:8000/todos",
@@ -135,38 +139,57 @@ function add(e) {
 
 // DELETE
 function deleteTodo(e) {
-  $.ajax({
-    type: "DELETE",
-    url: `http://localhost:8000/todos/${e.target.value}`,
-    headers: {
-      access_token: localStorage.getItem('access_token')
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
     }
-  })
-    .done(function (todo) {
-      $.ajax({
-        type: "GET",
-        url: "http://localhost:8000/todos",
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
+    $.ajax({
+      type: "DELETE",
+      url: `http://localhost:8000/todos/${e.target.value}`,
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+      .done(function (todo) {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8000/todos",
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+          .done(function (todos) {
+            $("#list").html("")
+            showList()
+  
+          })
+          .fail(function (err) {
+            console.log(err)
+          })
+        $(".todo-section").show();
       })
-        .done(function (todos) {
-          $("#list").html("")
-          showList()
-
-        })
-        .fail(function (err) {
-          console.log(err)
-        })
-      $(".todo-section").show();
-    })
-    .fail(function (err) {
-      console.log(err)
-    })
+      .fail(function (err) {
+        console.log(err)
+      })
+  })
+  
 }
 
 // EDIT FORM
 function editTodo(e) {
+  
   $.ajax({
     type: "GET",
     url: `http://localhost:8000/todos/${e.target.value}`,
@@ -283,6 +306,7 @@ function onSignIn(googleUser) {
     }
   })
   .done(function(){
+    $('#list').html('')
     $('.global').hide()
     $(".todo-section").show();
     showList()

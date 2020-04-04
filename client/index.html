@@ -9,6 +9,7 @@
     content="527992805647-u8gb95q95eau1g1o33doef2lmab16jce.apps.googleusercontent.com">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 
@@ -61,7 +62,7 @@
     <!-- Google Login -->
     <div class="google-section global" style="text-align: center;margin: auto;">
       <button class="btn btn-danger" style="width: 500px !important;">
-          <div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
       </button>
     </div>
 
@@ -85,8 +86,7 @@
         <button type="submit" class="btn btn-light" id="add-submit" style="width: 80px !important;">Add</button>
       </form>
       <!-- edit form -->
-      <form 
-     class="global" id="edit-form" onsubmit="editSubmit(event)">
+      <form class="global" id="edit-form" onsubmit="editSubmit(event)">
         <div class="row">
           <div class="col">
             <input type="text" class="form-control" placeholder="Title" id="edit-input-title">
@@ -98,8 +98,7 @@
             <input type="date" class="form-control" id="edit-input-date">
           </div>
         </div>
-        <button type="submit" class="btn btn-dark" id="edit-submit" style="width: 80px !important;"
-          >Edit</button>
+        <button type="submit" class="btn btn-dark" id="edit-submit" style="width: 80px !important;">Edit</button>
         <button class="btn btn-dark" id="cancel-submit" style="width: 80px !important;"
           onclick="cancelEdit(event)">Cancel</button>
       </form>
@@ -119,106 +118,9 @@
         </tbody>
       </table>
     </div>
-
-
-
-    <!-- <div id="toggle">
-      <button type="button" class="btn btn-info" id="login-btn">Login</button>
-      <button type="button" class="btn btn-dark" id="register-btn">Register</button>
-    </div>
-    <div class="register-section global">
-      <h2>Register</h2>
-      <form id="register" class="register-form" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input id="email-reg" type="email" class="form-control" aria-describedby="emailHelp" name="email">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password-reg" type="password" class="form-control" name="password">
-        </div>
-        <button type="submit" class="btn btn-dark register-button">Register</button>
-      </form>
-    </div>
-
-    
-    <div class="login-section global">
-      <h2>Login</h2>
-      <form id="login" class="register-form">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input id="email-login" type="email" class="form-control" aria-describedby="emailHelp" name="email">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password-login" type="password" class="form-control" name="password">
-        </div>
-        <button type="submit" class="btn btn-info">Login</button>
-      </form>
-    </div>
-
-    
-    <div class="todo-section global">
-      <div id="action">
-        <button type="button" class="btn btn-info" id="logout-btn">Logout</button>
-        <button type="button" class="btn btn-info" id="add-btn">Add Todo</button>
-      </div>
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col" >ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Due Date</th>
-            <th scope="col">Options</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody id="todoList">
-        </tbody>
-      </table>
-    </div>
-
-
-    
-    <div class="add-section global">
-      <h2>Add Todo</h2>
-      <form id="add" class="register-form">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input id="todo-title" type="text" class="form-control" name="title">
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input id="todo-description" type="text" class="form-control" name="description">
-        </div>
-        <div class="form-group">
-          <label for="due_date">Due Date</label>
-          <input id="todo-due_date" type="date" class="form-control" name="due_date">
-        </div>
-        <button type="submit" class="btn btn-info">Add Todo</button>
-      </form><br>
-      <button type="button" class="btn btn-secondary" id="cancel-add">Cancel</button>
-    </div>
-
-    
-    <div class="edit-section global">
-      <h2>Edit Todo</h2>
-      <form id="edit" class="register-form">
-      </form>
-      <br>
-      <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
-    </div>
-
-    
-    <div class="external-login ">
-      <div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
-    </div>
-    <a href="#" onclick="signOut()">signout</a>
-  </div> -->
-
   </div>
 
+  
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="main.js"></script>
 </body>

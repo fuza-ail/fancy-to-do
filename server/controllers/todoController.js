@@ -1,5 +1,5 @@
 const { Todo, User } = require('../models');
-const addToCalendar = require('../helpers/googleCalendarAPi')
+const sendEmail = require('../helpers/sendGrid')
 
 class TodoController {
   static displayTodos(req, res) {
@@ -28,7 +28,7 @@ class TodoController {
         })
       })
       .then(data => {
-        // addToCalendar(data.createdAt, data.due_date, data.title, data.description, req.email)
+        sendEmail(req.email,data.title,data.description)
       })
       .catch(next)
   }
