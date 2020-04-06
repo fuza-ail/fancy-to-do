@@ -34,7 +34,7 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
-- Error Response ( 400 - Bad Request! ):
+- Error Response ( 400 - empty value ):
 ```
 {
     "name": "SequelizeValidationError",
@@ -250,14 +250,14 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
-- Error Response ( 404 );
+- Error Response ( 404 - todo not found );
 ```
 {
     "error": "todo not found"
 }
 ```
 
-- Error Response ( 400 ):
+- Error Response ( 400 - access forbidden ):
 ```
 {
     "error": "access forbidden"
@@ -288,14 +288,14 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
-- Error Response ( 404 );
+- Error Response ( 404 - todo not found );
 ```
 {
     "error": "todo not found"
 }
 ```
 
-- Error Response ( 400 ):
+- Error Response ( 400 - access forbidden ):
 ```
 {
     "error": "access forbidden"
