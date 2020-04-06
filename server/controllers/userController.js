@@ -32,7 +32,7 @@ class userController {
             res.status(400).json({ error: 'wrong password' })
           }
         } else {
-          res.status(400).json({ error: 'email not found' })
+          res.status(404).json({ error: 'email not found' })
         }
       })
       .catch(err => {

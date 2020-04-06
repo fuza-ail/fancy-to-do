@@ -15,103 +15,289 @@ This is Todo app that can record your tasks and send it to your email.
 2. [SWAL2](https://sweetalert2.github.io/)
 
 ---
-### RESTful API
+### RESTFUL API
 
-#### GET /todos ==> Displaying all the todos from database
+#### POST /register
 
-- Response:
+- Request Body:
+```
+{
+	"email": "fuzail@gmail.com",
+	"password":"rahasia"
+}
+```
+
+- Response ( 201 ):
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzc2Nzl9.uKvEPP32PfwCgBnw78i-ToV8QRj26TlQ2KkAlXaMaUc"
+}
+```
+
+- Error Response ( 400 - Bad Request! ):
+```
+{
+    "name": "SequelizeValidationError",
+    "errors": [
+        {
+            "message": "Validation notEmpty on email failed",
+            "type": "Validation error",
+            "path": "email",
+            "value": "",
+            "origin": "FUNCTION",
+            "instance": {
+                "id": null,
+                "email": "",
+                "password": "$2a$08$X5yFuOiAt6vhRpcBjLs1JOJKrSdotcwXykcntNJNnIbEDIgmnVtNu",
+                "updatedAt": "2020-04-06T12:57:57.392Z",
+                "createdAt": "2020-04-06T12:57:57.392Z"
+            },
+            "validatorKey": "notEmpty",
+            "validatorName": "notEmpty",
+            "validatorArgs": [
+                false
+            ],
+            "original": {
+                "validatorName": "notEmpty",
+                "validatorArgs": [
+                    false
+                ]
+            }
+        }
+    ]
+}
+```
+
+---
+#### POST /login
+
+- Request Body:
+```
+{
+	"email": "fuzail@gmail.com",
+	"password":"rahasia"
+}
+```
+
+- Response ( 201 ):
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzgwMTl9.2GoJlM6J9egn9fvuPCqB9vu8oDyBJCSU_Cn3hhMlUUA"
+}
+```
+
+- Error Response ( 400 - wrong password )
+```
+{
+    "error": "wrong password"
+}
+```
+
+- Error Response ( 404 - email not found )
+```
+{
+    "error": "email not found"
+}
+```
+
+---
+#### GET /todos
+
+- Reqest Header:
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzgwMTl9.2GoJlM6J9egn9fvuPCqB9vu8oDyBJCSU_Cn3hhMlUUA"
+}
+```
+
+- Response ( 200 ):
 ```
 [
-	{
-        "id": 1,
-        "title": "first todo",
-        "description": "learn API",
+    {
+        "id": 7,
+        "title": "Learn to code",
+        "description": "deployement",
         "status": false,
-        "due_date": "2020-03-30T17:00:00.000Z",
-        "createdAt": "2020-03-30T10:26:32.217Z",
-        "updatedAt": "2020-03-30T10:26:32.217Z"
-	},
-	{
-        "id": 2,
-        "title": "second todo",
-        "description": "learn API",
-        "status": false,
-        "due_date": "2020-03-30T17:00:00.000Z",
-        "createdAt": "2020-03-30T10:29:53.665Z",
-        "updatedAt": "2020-03-30T10:29:53.665Z"
-	}
+        "due_date": "2020-03-31T17:00:00.000Z",
+        "UserId": 3,
+        "createdAt": "2020-04-06T13:12:29.225Z",
+        "updatedAt": "2020-04-06T13:12:29.225Z"
+    }
 ]
 ```
 
-#### POST /todos ==> Create todo in database
+---
+#### POST /todos
+- Request Body:
+```
+{
+	"title": "Learn to code",
+	"description":"deployement",
+	"status": false,
+	"due_date" : "2020/04/01"
+}
+```
 
 - Request Header:
-  <pre><code>{
-  		"Content-Type":"application/json; charset=utf-8"
-  }</code></pre>
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzgwMTl9.2GoJlM6J9egn9fvuPCqB9vu8oDyBJCSU_Cn3hhMlUUA"
+}
+```
+
+- Response:
+```
+{
+    "id": 7,
+    "title": "Learn to code",
+    "description": "deployement",
+    "status": false,
+    "due_date": "2020-03-31T17:00:00.000Z",
+    "UserId": 3,
+    "updatedAt": "2020-04-06T13:12:29.225Z",
+    "createdAt": "2020-04-06T13:12:29.225Z"
+}
+```
+
+- Error Response ( 400 - empty value ):
+```
+{
+    "name": "SequelizeValidationError",
+    "errors": [
+        {
+            "message": "Title can not be empty",
+            "type": "Validation error",
+            "path": "title",
+            "value": "",
+            "origin": "FUNCTION",
+            "instance": {
+                "id": null,
+                "title": "",
+                "description": "deployement",
+                "status": false,
+                "due_date": "2020-03-31T17:00:00.000Z",
+                "UserId": 3,
+                "updatedAt": "2020-04-06T13:15:24.788Z",
+                "createdAt": "2020-04-06T13:15:24.788Z"
+            },
+            "validatorKey": "notEmpty",
+            "validatorName": "notEmpty",
+            "validatorArgs": [
+                true
+            ],
+            "original": {
+                "validatorName": "notEmpty",
+                "validatorArgs": [
+                    true
+                ]
+            }
+        }
+    ]
+}
+```
+
+---
+#### GET /todos/:id
+
+- Request Header:
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzgwMTl9.2GoJlM6J9egn9fvuPCqB9vu8oDyBJCSU_Cn3hhMlUUA"
+}
+```
+
+- Response ( 200 ):
+```
+{
+    "id": 7,
+    "title": "Learn to code",
+    "description": "deployement",
+    "status": false,
+    "due_date": "2020-03-31T17:00:00.000Z",
+    "UserId": 3,
+    "createdAt": "2020-04-06T13:12:29.225Z",
+    "updatedAt": "2020-04-06T13:12:29.225Z"
+}
+```
+
+---
+#### PUT /todos/:id
 
 - Request Body:
-  <pre><code>{
-	    "id": 1,
-	    "title": "first todo",
-	    "description": "learn API",
-	    "status": false,
-	    "due_date": "2020-03-30T17:00:00.000Z"
-  }</code></pre>
+```
+{
+	"title": "learn updated",
+	"description":"deployement",
+	"status": false,
+	"due_date" : "2020/04/01"
+}
+```
+
+- Request Headers:
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjMsIlVzZXJFbWFpbCI6ImZ1emFpbEBnbWFpbC5jb20iLCJpYXQiOjE1ODYxNzgwMTl9.2GoJlM6J9egn9fvuPCqB9vu8oDyBJCSU_Cn3hhMlUUA"
+}
+```
+
+- Response ( 200 ):
+```
+{
+	"title": "learn updated",
+	"description":"deployement",
+	"status": false,
+	"due_date" : "2020/04/01"
+}
+```
+
+- Error Response ( 404 );
+```
+{
+    "error": "todo not found"
+}
+```
+
+- Error Response ( 400 ):
+```
+{
+    "error": "access forbidden"
+}
+```
+
+---
+#### DELETE /todos/:id
+
+- Request params:
+```
+{
+    "id": 7
+}
+```
 
 - Response:
-  <pre><code>{
-	    "id": 1,
-	    "title": "first todo",
-	    "description": "learn API",
-	    "status": false,
-	    "due_date": "2020-03-30T17:00:00.000Z",
-	    "updatedAt": "2020-03-30T10:26:32.217Z",
-	    "createdAt": "2020-03-30T10:26:32.217Z"
-  }</code></pre>
+```
+{
+    "id": 7,
+    "title": "learn updated",
+    "description": "deployement",
+    "status": false,
+    "due_date": "2020-03-31T17:00:00.000Z",
+    "UserId": 3,
+    "createdAt": "2020-04-06T13:12:29.225Z",
+    "updatedAt": "2020-04-06T13:25:36.369Z"
+}
+```
 
-#### GET /todos/:id ==> Displaying todo by id
+- Error Response ( 404 );
+```
+{
+    "error": "todo not found"
+}
+```
 
-- Response:
-  <pre><code>{
-	    "id": 1,
-	    "title": "first todo",
-	    "description": "learn API",
-	    "status": false,
-	    "due_date": "2020-03-30T17:00:00.000Z",
-	    "createdAt": "2020-03-30T10:26:32.217Z",
-	    "updatedAt": "2020-03-30T10:26:32.217Z"
-	}</code></pre>
-
-- Error Response:
-<pre><code>{ "error": "not found" }</code></pre>
-
-#### PUT /todos/:id ==> Editing todo by id
-
-- Request Body:
-<pre><code></code>{
-        "id": 2,
-        "title": "second todo",
-        "description": "learn API and CRUD",
-        "status": false,
-        "due_date": "2020-03-30T17:00:00.000Z",
-    }</pre>
-
-- Response:
-<pre><code>{
-        "id": 2,
-        "title": "second todo",
-        "description": "learn API and CRUD",
-        "status": false,
-        "due_date": "2020-03-30T17:00:00.000Z",
-        "createdAt": "2020-03-30T10:29:53.665Z",
-        "updatedAt": "2020-03-30T10:36:16.940Z"
-	}</code></pre>
-
-- Error Response:
-<pre><code>{ "error": "not found" }</code></pre>
-
-#### DELETE /todos/:id ==> Delete todo by id
-
-- Error Response:
-<pre><code>{ "error": "not found" }</code></pre>
+- Error Response ( 400 ):
+```
+{
+    "error": "access forbidden"
+}
+```

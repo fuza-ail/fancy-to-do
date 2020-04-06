@@ -3,7 +3,7 @@ const authorization = function (req, res, next) {
   Todo.findOne({ where: { id: req.params.id } })
     .then(todo => {
       if (todo) {
-        if (todo.UserId == req.UserId) {
+        if (todo.UserId == req.user.UserId) {
           next()
         } else {
           res.status(400).json({ error: 'access forbidden' })

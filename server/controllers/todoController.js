@@ -3,7 +3,7 @@ const sendEmail = require('../helpers/sendGrid')
 
 class TodoController {
   static displayTodos(req, res) {
-    Todo.findAll({ where: { UserId: req.UserId } })
+    Todo.findAll({ where: { UserId: req.user.UserId } })
       .then(todos => {
         res.status(200).json(todos);
       })
@@ -19,7 +19,7 @@ class TodoController {
       description: req.body.description,
       status: req.body.status,
       due_date: req.body.due_date,
-      UserId: req.UserId
+      UserId: req.user.UserId
     })
       .then((todo) => {
         res.status(201).json(todo);
