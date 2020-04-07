@@ -3,7 +3,7 @@ const { hashPassword, checkAccount } = require('../helpers/bcrypt');
 const jwt = require('jsonwebtoken')
 
 class userController {
-  static register(req, res) {
+  static register(req, res,next) {
     let userData = req.body;
     userData.password = hashPassword(req.body.password)
     User.create(userData)
@@ -14,9 +14,7 @@ class userController {
         }, process.env.TokenKey)
         res.status(201).json({ access_token: token })
       })
-      .catch(err => {
-        res.status(400).json(err)
-      })
+      .catch(next)
   }
   static login(req, res) {
     User.findOne({ where: { email: req.body.email } })
@@ -35,9 +33,7 @@ class userController {
           res.status(404).json({ error: 'email not found' })
         }
       })
-      .catch(err => {
-        res.status(400).json(err)
-      })
+      .catch(next)
   }
 }
 

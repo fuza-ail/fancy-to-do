@@ -2,14 +2,12 @@ const { Todo, User } = require('../models');
 const sendEmail = require('../helpers/sendGrid')
 
 class TodoController {
-  static displayTodos(req, res) {
+  static displayTodos(req, res,next) {
     Todo.findAll({ where: { UserId: req.user.UserId } })
       .then(todos => {
         res.status(200).json(todos);
       })
-      .catch(err => {
-        res.status(500).json(err);
-      })
+      .catch(next)
 
   }
 
@@ -33,7 +31,7 @@ class TodoController {
       .catch(next)
   }
 
-  static displayTodo(req, res) {
+  static displayTodo(req, res,next) {
     Todo.findOne({ where: { id: req.params.id } })
       .then(todo => {
         if (todo == null) {
@@ -42,12 +40,10 @@ class TodoController {
           res.status(200).json(todo);
         }
       })
-      .catch(err => {
-        res.status(500).json(err);
-      })
+      .catch(next)
   }
 
-  static editTodo(req, res) {
+  static editTodo(req, res,next) {
     Todo.findByPk(req.params.id)
       .then(todo => {
         return Todo.update({ title: req.body.title, description: req.body.description, status: req.body.status, due_date: req.body.due_date }, { where: { id: req.params.id } })
@@ -55,12 +51,10 @@ class TodoController {
             res.status(200).json(todo)
           })
       })
-      .catch(err => {
-        res.status(404).json({ error: 'not found' })
-      })
+      .catch(next)
   }
 
-  static deleteTodo(req, res) {
+  static deleteTodo(req, res,next) {
     Todo.findByPk(req.params.id)
       .then(todo => {
         return Todo.destroy({ where: { id: req.params.id } })
@@ -71,9 +65,7 @@ class TodoController {
             res.status(500).json(err)
           })
       })
-      .catch(err => {
-        res.status(404).json({ error: 'not found' })
-      })
+      .catch(next)
   }
 }
 

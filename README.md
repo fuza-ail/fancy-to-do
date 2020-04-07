@@ -68,6 +68,13 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
+}
+```
+
 ---
 #### POST /login
 
@@ -100,6 +107,14 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
+
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
+}
+```
+
 ---
 #### GET /todos
 
@@ -124,6 +139,14 @@ This is Todo app that can record your tasks and send it to your email.
         "updatedAt": "2020-04-06T13:12:29.225Z"
     }
 ]
+```
+
+
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
+}
 ```
 
 ---
@@ -196,6 +219,14 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
+
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
+}
+```
+
 ---
 #### GET /todos/:id
 
@@ -217,6 +248,14 @@ This is Todo app that can record your tasks and send it to your email.
     "UserId": 3,
     "createdAt": "2020-04-06T13:12:29.225Z",
     "updatedAt": "2020-04-06T13:12:29.225Z"
+}
+```
+
+
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
 }
 ```
 
@@ -264,6 +303,13 @@ This is Todo app that can record your tasks and send it to your email.
 }
 ```
 
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
+}
+```
+
 ---
 #### DELETE /todos/:id
 
@@ -299,5 +345,13 @@ This is Todo app that can record your tasks and send it to your email.
 ```
 {
     "error": "access forbidden"
+}
+```
+
+
+- Error Response ( 500 - Internal server error ):
+```
+{
+    "error": "Internal Server Error"
 }
 ```
