@@ -18,7 +18,7 @@ This is Todo app that can record your tasks and send it to your email.
 ### RESTFUL API
 
 #### POST /register
-
+###### Create account
 - Request Body:
 ```
 {
@@ -77,7 +77,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### POST /login
-
+###### Login account
 - Request Body:
 ```
 {
@@ -117,7 +117,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### GET /todos
-
+###### Get all todo data
 - Reqest Header:
 ```
 {
@@ -151,6 +151,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### POST /todos
+###### Create todo
 - Request Body:
 ```
 {
@@ -229,7 +230,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### GET /todos/:id
-
+###### Get specific todo
 - Request Header:
 ```
 {
@@ -261,7 +262,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### PUT /todos/:id
-
+###### Edit specific todo
 - Request Body:
 ```
 {
@@ -312,7 +313,7 @@ This is Todo app that can record your tasks and send it to your email.
 
 ---
 #### DELETE /todos/:id
-
+###### Delete specific
 - Request params:
 ```
 {
